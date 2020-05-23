@@ -8,13 +8,7 @@ Este repositório tem como objetivo expor os conceitos iniciais em node.js sobre
 - Express
 
 
-### Rotas :metal:
-São utilizadas rotas com os seguintes métodos HTTP: 
 
-- GET
-- POST
-- UPDATE
-- DELETE
 
 ### Como rodar o projeto :round_pushpin:
 1. Certifique-se que possui o node devidamente instalado em sua máquina
@@ -24,6 +18,13 @@ São utilizadas rotas com os seguintes métodos HTTP:
       `$ yarn install `
 
 ### Como funciona :new_moon_with_face:
+#### Rotas :metal:
+São utilizadas rotas com os seguintes métodos HTTP: 
+
+- GET
+- POST
+- UPDATE
+- DELETE
 O projeto conta com uma varável que armazena os dados em tempo de execução. Ela é iniciada vazia, como mostrado abaixo, e é modificada através das requisições feitas
 
 ```javascript
@@ -44,3 +45,41 @@ Como vemos acima, na linha 2, é utilizado desestruturação para capturar os da
 Na linha 5, então, com o comando push, adiciona esses valores recebidos da request ao array vazio temporário criado no primeiro exemplo de código.  Essa função retorna um JSON com o valores enviados ao cliente. 
 
 > Para conseguir testar todas as requisições eu utilizei um software chamado **Insomnia**, que pode ser obtido através deste , [Link](https://insomnia.rest/download/core/?&ref=https%3A%2F%2Fwww.google.com%2F/)。
+
+### Middlewares
+
+Interceptador de requisições, ele pode: 
+- Interromper totalmente a requisição;
+- Alterar dados da requisição;
+
+O formato de um middleware é um função, e que recebe por padrão 3 parâmetros: *request, response e next*. 
+> As rotas podem ser consideradas middlewares também
+
+```javascript
+function logRequests(request, response, next){
+  const { method, url } = request;
+
+  const logLabel = `[${method.toUpperCase()}] ${url}`;
+
+  console.log(logLabel);
+
+  return next();
+}
+```
+O middleware acima imprime no terminal em qual rota ele foi utilizado e qual método, em caixa alta. 
+##### Como chamar um middleware em um requisição: 
+
+Pode-se utilizar um middleware em todas as requisições, para isso basta utilizar o comando: 
+
+```javascript
+app.use(logRequests)
+```
+ou
+
+Pode-se utilizar o middleware em um requisição específica: 
+
+```javascript
+app.post('/projects', logRequests, (request, response) =>
+```
+
+> Os middlewares são bem utilizados para validações

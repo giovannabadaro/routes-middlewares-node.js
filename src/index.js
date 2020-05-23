@@ -5,9 +5,24 @@ const app = express();
 
 app.use(express.json());
 
+/* variável que é modificada em tempo de execução */
 const projects = [];
 
-app.post('/projects', (request, response) => {
+
+/* Middleware */
+
+function logRequests(request, response, next){
+  const { method, url } = request;
+
+  const logLabel = `[${method.toUpperCase()}] ${url}`;
+
+  console.log(logLabel);
+
+  return next();
+}
+/* app.use(logRequests); */
+
+app.post('/projects', logRequests, (request, response) => {
   const { title, owner } = request.body;
   const project = { id: uuid(), title, owner };
 
@@ -19,7 +34,6 @@ app.post('/projects', (request, response) => {
 app.get('/projects', (request, response) => {
   return response.json(projects);
 });
-
 
 
 app.put('/projects/:id', (request, response) => {
