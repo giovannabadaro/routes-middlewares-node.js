@@ -1,6 +1,6 @@
 
 
-##Rotas e middlewares em node js :fa-rocket:
+## Rotas e middlewares em node js :rocket:
 
 Este repositório tem como objetivo expor os conceitos iniciais em node.js sobre rotas e middlewares
 
