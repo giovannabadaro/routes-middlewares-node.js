@@ -7,10 +7,6 @@ app.use(express.json());
 
 const projects = [];
 
-app.get('/projects', (request, response) => {
-  return response.json(projects);
-});
-
 app.post('/projects', (request, response) => {
   const { title, owner } = request.body;
   const project = { id: uuid(), title, owner };
@@ -19,6 +15,12 @@ app.post('/projects', (request, response) => {
 
   return response.json(project);
 });
+
+app.get('/projects', (request, response) => {
+  return response.json(projects);
+});
+
+
 
 app.put('/projects/:id', (request, response) => {
   const { id } = request.params;
