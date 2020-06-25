@@ -12,6 +12,7 @@ const projects = [];
 
 /* Middleware */
 
+
 function logRequests(request, response, next){
   const { method, url } = request;
 
